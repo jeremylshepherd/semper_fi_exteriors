@@ -653,6 +653,10 @@ article + img {
     font-size: calc(8px + 1vw);
   }
 
+  .service span {
+    margin-right: 5px;
+  }
+
   .form-input,
   .form-btn {
     max-width: 400px;

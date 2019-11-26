@@ -1,5 +1,4 @@
-// import './styles.css';
-const _$ = el => document.querySelector(el);
+const _$ = el => document.querySelector(el); //My own jQuery super-lite function
 const _$All = el => document.querySelectorAll(el);
 
 const App = _$("#app");
@@ -9,11 +8,6 @@ const faithful = _$("#faithful");
 const _right = _$("#_right");
 const root = document.documentElement;
 const cta = _$(".cta-btn");
-function getViewPort() {
-  return Math.max(root.clientWidth, window.innerWidth || 0);
-}
-
-let w = getViewPort();
 
 const downContainer = _$(".down-container");
 const downButton = _$(".fa-angle-down");
@@ -28,6 +22,7 @@ if (!CSS.supports("backdrop-filter", "blur()")) {
   root.style.setProperty("--nav-bg", "rgba(255, 255, 255, 0.95)");
 }
 
+//To animate the navbar on scroll and the slogan animation
 const heroObserver = new IntersectionObserver((entries, heroObserver) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) {
@@ -47,12 +42,5 @@ const heroObserver = new IntersectionObserver((entries, heroObserver) => {
     }
   });
 }, heroOptions);
-
-// const vp = `<div id="modal" style="display:flex;align-items:center;justify-content:center;position: fixed; top:0;bottom:0;left:0;right:0;background-color:rgba(255, 255, 255, 0.25);color:black"><h1>${w}</h1></div>`;
-// App.innerHTML += vp;
-
-// window.addEventListener('resize', e => {
-//   _$('#modal h1').innerText = getViewPort();
-// });
 
 heroObserver.observe(Hero);

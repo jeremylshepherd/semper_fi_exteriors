@@ -10,6 +10,28 @@
 
 :root {
   --nav-bg: rgba(255, 255, 255, 0.75);
+  --body-bg: #fff;
+  --brand-bg: none;
+  --gallery-height: calc(95vw * 0.65);
+  --gallery-max-height: calc(960px * 0.65);
+  --clear: transparent;
+  --body-text: #222;
+  --text-inverse: #222;
+  --gallery-btn: var(--nav-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-text: #fff;
+    --body-bg: #222;
+    --brand-bg: linear-gradient(
+      30deg,
+      rgba(50, 50, 50, 0.75),
+      rgba(100, 100, 100, 0.75),
+      rgba(50, 50, 50, 0.75)
+    );
+    --gallery-btn: rgba(0, 0, 0, 0.5);
+  }
 }
 
 html {
@@ -21,6 +43,7 @@ body {
   margin: 0 auto;
   width: 100vw;
   font-family: Open Sans, sans-serif;
+  background-color: var(--body-bg);
 }
 
 h1,
@@ -39,7 +62,6 @@ a {
 /* NAV */
 
 nav {
-  --clear: transparent;
   --text: white;
   --text-inverse: #222;
   z-index: 100;
@@ -54,7 +76,7 @@ nav {
   height: 85px;
   width: 100vw;
   background: var(--clear);
-  transition: background 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
 }
 
 .nav-brand {
@@ -318,7 +340,7 @@ section {
   justify-content: space-evenly;
   position: relative;
   margin-top: 1em;
-  overflow: hidden;
+  color: var(--body-text);
 }
 
 article {
@@ -368,9 +390,19 @@ article + img {
 
 .brand-grid {
   display: none;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr;
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
+  background-image: var(--brand-bg);
+}
+
+.brand-grid-item {
+  background-color: var(--brand-bg);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .brand-grid img {
@@ -395,45 +427,51 @@ article + img {
   border: 1px solid rgba(0, 0, 0, 0.25);
   background: rgba(0, 0, 0, 0.25);
   max-width: 960px;
+  width: 95vw;
 }
 
 .gallery {
-  width: 80vw;
+  width: 100%;
+  max-width: 960px;
   margin: 0 auto;
-  background: rgba(0, 0, 0, 0.25);
+  transition: all 350ms ease-in-out;
+  height: var(--gallery-height);
+  max-height: var(--gallery-max-height);
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-path {
   height: 100%;
 }
 
-.gallery::after {
-  content: "GALLERY COMING SOON";
-  color: #222;
-  font-family: "Archivo Black";
-  font-size: 6vmin;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  transform: rotate(-30deg);
-  background-color: rgba(0, 0, 0, 0.25);
-  top: 50px;
-  left: -30%;
-  right: -30%;
-  bottom: 50px;
+.gallery-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  max-width: 959px;
+  width: 100vw;
+  height: var(--gallery-height);
+  max-height: var(--gallery-max-height);
+  transition: transform 350ms ease-in-out;
 }
 
-.gallery-container {
-  display: flex;
-  overflow: hidden;
-  scroll-snap-type: x mandatory;
-  background-color: lightblue;
-  position: relative;
+.gallery-slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .gallery-img {
-  position: absolute;
+  width: 105%;
+  object-fit: cover;
+}
+
+.current-slide {
   width: 100%;
-  top: 0;
-  left: 0;
+  height: 100%;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .gallery__btn {
@@ -444,14 +482,27 @@ article + img {
   font-size: 2em;
   background: none;
   border: none;
+  background: var(--gallery-btn);
+  padding: 0.25em 0.5em;
+  border-radius: 50%;
+  color: var(--body-text);
+}
+
+.gallery__btn:active {
+  filter: invert(50%);
+}
+
+.gallery__btn i {
+  display: grid;
+  place-items: center;
 }
 
 .gallery__btn--left {
-  left: -5vw;
+  left: 0;
 }
 
 .gallery__btn--right {
-  right: -5vw;
+  right: 0;
 }
 
 /* FORM */
@@ -525,14 +576,14 @@ article + img {
 
 .footer a {
   text-decoration: none;
-  color: #222;
+  color: var(--body-text);
   font-family: Archivo Black;
   cursor: hand;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--body-text);
   padding: 0.75em;
   border-radius: 25px;
   transition: all 125ms ease-in-out;
-  background-color: #fff;
+  background-color: var(--body-bg);
 }
 
 .footer a:hover {
@@ -541,6 +592,8 @@ article + img {
 
 .footer span {
   max-width: 53vw;
+  color: var(--body-text);
+  text-align: end;
 }
 
 .hidden {
@@ -657,6 +710,10 @@ article + img {
     margin-right: 5px;
   }
 
+  .gallery {
+    width: 95vw;
+  }
+
   .form-input,
   .form-btn {
     max-width: 400px;
@@ -724,6 +781,6 @@ article + img {
 
 @media screen and (min-height: 0) and (max-height: 700px) {
   .hero-logo img {
-    width: 140px;
+    max-width: 140px;
   }
 }
